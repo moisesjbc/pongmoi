@@ -52,7 +52,7 @@ function update()
 
 function create_paddle(x, y, color)
 {
-    paddle = game.add.graphics(x,y);
+    var paddle = game.add.graphics(x,y);
     paddle.beginFill(color, 1);
     paddle.lineStyle(2, 0xFFFFFF, 1);
     paddle.drawRect(0, 0, 25, 100);
@@ -64,11 +64,11 @@ function create_paddle(x, y, color)
 
 function create_horizontal_border(y)
 {
-    border = game.add.graphics(0,y);
+    var border = game.add.graphics(0,y);
     border.beginFill(0xAAAAAA, 1);
     border.lineStyle(2, 0xFFFFFF, 1);
     border.drawRect(0, 0, 800, 20);
     border.endFill();
 
-    return paddle;
+    return border;
 }
