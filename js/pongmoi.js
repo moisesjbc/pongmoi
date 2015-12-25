@@ -7,6 +7,7 @@ var ball;
 var top_border;
 var bottom_border;
 var paddle_speed = 300;
+var paddle_max_speed = 300;
 
 var player_1_up;
 var player_1_down;
@@ -124,6 +125,7 @@ function create_ball(x, y, velocity_x, velocity_y)
     ball_sprite.body.setSize(25,25);
     ball_sprite.body.velocity.x = velocity_x;
     ball_sprite.body.velocity.y = velocity_y;
-
+    ball_sprite.body.maxVelocity.set(paddle_max_speed);
+    
     return ball_sprite;
 }
