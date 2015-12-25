@@ -58,7 +58,7 @@ function update()
     }else if (player_1_down.isDown){
         paddle_1.body.velocity.y = paddle_speed;
     }
-
+    
     // Process player 2 input.
     if (player_2_up.isDown){
         paddle_2.body.velocity.y = -paddle_speed;
@@ -66,6 +66,8 @@ function update()
         paddle_2.body.velocity.y = paddle_speed;
     }
 
+    // Prevent paddles to be moved in X.
+    paddle_1.body.velocity.x = paddle_2.body.velocity.x = 0;
 
     if( ball.position.x < 0 || ball.position.x > 800 ){
         ball.position.set(400,300);
