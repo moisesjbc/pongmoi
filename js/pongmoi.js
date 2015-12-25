@@ -31,7 +31,7 @@ function create()
 
     player_1 = new Player(5, 50, '#0000FF');
     player_2 = new Player(770, 50, '#FF0000');
-    ball = create_ball(400, 300, 150, 150);
+    ball = new Ball(400, 300, 150, 150);
     top_border = create_horizontal_border(0);
     bottom_border = create_horizontal_border(580);
 
@@ -52,17 +52,7 @@ function update()
 
     player_1.update();
     player_2.update();
-
-    // Restart ball if it goes out of screen.
-    if( ball.position.x < 0 || ball.position.x > 800 ){
-        if( ball.position.x < 0 ){
-            ball.body.velocity.x = -150;
-        }else{
-            ball.body.velocity.x = 150;
-        }
-        ball.position.set(400,300);
-        ball.body.velocity.y = 150;
-    }
+    ball.update();
 }
 
 
@@ -86,24 +76,4 @@ function create_horizontal_border(y)
     border_sprite.body.immovable = true;
 
     return border_sprite;
-}
-
-
-function create_ball(x, y, velocity_x, velocity_y)
-{
-    var ball = game.add.bitmapData(25, 25);
-    ball.ctx.rect(0, 0, 25, 25);
-    ball.ctx.fillStyle = '#FFFFFF';
-    ball.ctx.fill();
-
-    var ball_sprite = physics_elements.create(x, y, ball);
-    game.physics.arcade.enable(ball_sprite);
-    ball_sprite.body.enable = true;
-    ball_sprite.body.setSize(25,25);
-    ball_sprite.body.velocity.x = velocity_x;
-    ball_sprite.body.velocity.y = velocity_y;
-    ball_sprite.body.maxVelocity.set(paddle_max_speed);
-    ball_sprite.body.bounce.set(100);
-    
-    return ball_sprite;
 }
