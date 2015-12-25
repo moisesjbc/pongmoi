@@ -3,9 +3,10 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 var physics_elements;
 var paddle_1;
 var paddle_2;
+var ball;
 var top_border;
 var bottom_border;
-var paddle_speed = 100;
+var paddle_speed = 300;
 
 var player_1_up;
 var player_1_down;
@@ -29,8 +30,14 @@ function create()
 
     paddle_1 = create_paddle(5, 50, '#0000FF');
     paddle_2 = create_paddle(770, 50, '#FF0000');
+    ball = create_ball(400, 300, 150, 150);
     top_border = create_horizontal_border(0);
     bottom_border = create_horizontal_border(580);
+
+    physics_elements.forEach(function(item) {
+        item.body.bounce.set(1);
+        item.body.friction.setTo(0, 0);
+    });
 
     // Set inputs
     player_1_up = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -56,6 +63,11 @@ function update()
         paddle_2.body.velocity.y = -paddle_speed;
     }else if (player_2_down.isDown){
         paddle_2.body.velocity.y = paddle_speed;
+    }
+
+
+    if( ball.position.x < 0 || ball.position.x > 800 ){
+        ball.position.set(400,300);
     }
 }
 
@@ -96,4 +108,22 @@ function create_horizontal_border(y)
     border_sprite.body.immovable = true;
 
     return border_sprite;
+}
+
+
+function create_ball(x, y, velocity_x, velocity_y)
+{
+    var ball = game.add.bitmapData(25, 25);
+    ball.ctx.rect(0, 0, 25, 25);
+    ball.ctx.fillStyle = '#FFFFFF';
+    ball.ctx.fill();
+
+    var ball_sprite = physics_elements.create(x, y, ball);
+    game.physics.arcade.enable(ball_sprite);
+    ball_sprite.body.enable = true;
+    ball_sprite.body.setSize(25,25);
+    ball_sprite.body.velocity.x = velocity_x;
+    ball_sprite.body.velocity.y = velocity_y;
+
+    return ball_sprite;
 }
