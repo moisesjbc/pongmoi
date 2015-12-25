@@ -56,12 +56,6 @@ function update()
 }
 
 
-function collisionHandler (obj1, obj2)
-{
-    game.stage.backgroundColor = '#992d2d';
-}
-
-
 function create_horizontal_border(y)
 {
     var border = game.add.bitmapData(800, 20);
