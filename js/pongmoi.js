@@ -64,8 +64,15 @@ function update()
     // Prevent paddles to be moved in X.
     paddle_1.body.velocity.x = paddle_2.body.velocity.x = 0;
 
+    // Restart ball if it goes out of screen.
     if( ball.position.x < 0 || ball.position.x > 800 ){
+        if( ball.position.x < 0 ){
+            ball.body.velocity.x = -150;
+        }else{
+            ball.body.velocity.x = 150;
+        }
         ball.position.set(400,300);
+        ball.body.velocity.y = 150;
     }
 }
 
