@@ -35,11 +35,6 @@ function create()
     top_border = create_horizontal_border(0);
     bottom_border = create_horizontal_border(580);
 
-    physics_elements.forEach(function(item) {
-        item.body.bounce.set(1);
-        item.body.friction.setTo(0, 0);
-    });
-
     // Set inputs
     player_1_up = game.input.keyboard.addKey(Phaser.Keyboard.W);
     player_1_down = game.input.keyboard.addKey(Phaser.Keyboard.S);
@@ -128,6 +123,7 @@ function create_ball(x, y, velocity_x, velocity_y)
     ball_sprite.body.velocity.x = velocity_x;
     ball_sprite.body.velocity.y = velocity_y;
     ball_sprite.body.maxVelocity.set(paddle_max_speed);
+    ball_sprite.body.bounce.set(100);
     
     return ball_sprite;
 }
