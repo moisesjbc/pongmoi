@@ -32,10 +32,18 @@ function Ball(x, y, velocity_x, velocity_y)
 }
 
 
-Ball.prototype.update = function()
+Ball.prototype.update = function(player_1, player_2)
 {
     // Restart ball if it goes out of screen.
     if( this.ball.position.x < 0 || this.ball.position.x > 800 ){
+        // Increase the score of the farest player (in X).
+        if( Math.abs(this.ball.position.x - player_1.paddle.position.x) > Math.abs(this.ball.position.x - player_2.paddle.position.x) ){
+            player_1.score++;
+        }else{
+            player_2.score++;
+        }
+
+        // Restart ball position and velocity.
         if( this.ball.position.x < 0 ){
             this.ball.body.velocity.x = -this.initial_velocity.x;
         }else{

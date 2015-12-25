@@ -2,6 +2,8 @@
 
 function Player(x, y, color)
 {
+    this.score = 0;
+
     // Create the bitmap representing the player's paddle.
     var paddle_bitmap = game.add.bitmapData(25, 100);
     paddle_bitmap.ctx.rect(0, 0, 25, 100);
