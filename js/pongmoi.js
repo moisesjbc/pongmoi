@@ -6,7 +6,7 @@ var player_2;
 var ball;
 var top_border;
 var bottom_border;
-var paddle_speed = 300;
+var paddle_speed = 500;
 var paddle_max_speed = 300;
 
 var player_1_up;

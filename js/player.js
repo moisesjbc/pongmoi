@@ -27,6 +27,8 @@ Player.prototype.process_input = function(up_button, down_button)
         this.paddle.body.velocity.y = -paddle_speed;
     }else if (down_button.isDown){
         this.paddle.body.velocity.y = paddle_speed;
+    }else{
+        this.paddle.body.velocity.y = 0;
     }
 }
 
