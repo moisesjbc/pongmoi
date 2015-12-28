@@ -61,8 +61,8 @@ function update()
     player_2.update();
     ball.update(player_1, player_2);
 
-    player_1_score_text.text = 'Player 1: ' + player_1.score;
-    player_2_score_text.text = 'Player 2: ' + player_2.score;
+    player_1_score_text.text = 'P1 score: ' + player_1.score;
+    player_2_score_text.text = 'P2 score: ' + player_2.score;
     player_1_n_swaps_text.text = 'P1 swaps: ' + player_1.n_swaps;
     player_2_n_swaps_text.text = 'P2 swaps: ' + player_2.n_swaps;
 }
