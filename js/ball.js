@@ -19,10 +19,10 @@ function Ball(x, y, velocity_x, velocity_y)
 
     // Bitmaps can't have physics on their own, so we create a sprite as a
     // container.
-    this.ball = physics_elements.create(x, y, ball_bitmap);
+    this.ball = game.add.sprite(x, y, ball_bitmap);
 
     // Enable and configure ball physics.
-    game.physics.arcade.enable(ball_bitmap);
+    game.physics.arcade.enable(this.ball);
     this.ball.body.enable = true;
     this.ball.body.setSize(25,25);
     this.ball.body.velocity.x = velocity_x;

@@ -1,6 +1,6 @@
 
 
-function Player(x, y, color)
+function Player(group, x, y, color)
 {
     this.score = 0;
 
@@ -16,7 +16,7 @@ function Player(x, y, color)
 
     // Bitmap can't have physics on its own, so we create a sprite as 
     // container.
-    this.paddle = physics_elements.create(x, y, paddle_bitmap);
+    this.paddle = group.create(x, y, paddle_bitmap);
 
     // Enable physics for sprite.
     game.physics.arcade.enable(this.paddle);
