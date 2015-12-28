@@ -17,6 +17,7 @@ var player_2_swap;
 var player_1_score_text;
 var player_2_score_text;
 
+var last_ball_player_collision_timestamp = 0;
 
 function preload() 
 {
@@ -111,11 +112,21 @@ function create_players()
 
 function process_ball_hit_player_1()
 {
-    player_1.decrease_hits_to_get_swap_counter();
+    // A ball-player hit may trigger multiple collisions, so we discard those
+    // too close in time.
+    if( game.time.totalElapsedSeconds() - last_ball_player_collision_timestamp > 0.5 ){
+        last_ball_player_collision_timestamp = game.time.totalElapsedSeconds();
+        player_1.decrease_hits_to_get_swap_counter();
+    }
 }
 
 
 function process_ball_hit_player_2()
 {
-    player_2.decrease_hits_to_get_swap_counter();
+    // A ball-player hit may trigger multiple collisions, so we discard those
+    // too close in time.
+    if( game.time.totalElapsedSeconds() - last_ball_player_collision_timestamp > 0.5 ){
+        last_ball_player_collision_timestamp = game.time.totalElapsedSeconds();
+        player_2.decrease_hits_to_get_swap_counter();
+    }
 }
