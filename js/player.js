@@ -1,4 +1,4 @@
-
+var HITS_TO_GET_SWAP = 3;
 
 function Player(group, x, y, color)
 {
@@ -7,6 +7,8 @@ function Player(group, x, y, color)
     // Swap cooldown and timestamp.
     this.swapCooldown = 3.0;
     this.lastSwapTimestamp = -3.0;
+    this.hits_to_get_swap = HITS_TO_GET_SWAP;
+    this.n_swaps = 0;
 
     // Create the bitmap representing the player's paddle.
     var paddle_bitmap = game.add.bitmapData(25, 100);
@@ -36,9 +38,11 @@ Player.prototype.process_input = function(game, up_button, down_button, swap_but
     }
 
     if(swap_button.isDown && 
+       this.n_swaps > 0 &&
         (game.time.totalElapsedSeconds() - this.lastSwapTimestamp > this.swapCooldown))
     {
         this.lastSwapTimestamp = game.time.totalElapsedSeconds();
+        this.n_swaps--;
         this.swap(other_player);
     }
 }
@@ -58,4 +62,14 @@ Player.prototype.swap = function(other_player)
     this.paddle.position = other_player.paddle.position;
 
     other_player.paddle.position = paddle_pos;
+}
+
+
+Player.prototype.decrease_hits_to_get_swap_counter = function()
+{
+    this.hits_to_get_swap--;
+    if(this.hits_to_get_swap == 0){
+        this.hits_to_get_swap = HITS_TO_GET_SWAP;
+        this.n_swaps++;
+    }
 }

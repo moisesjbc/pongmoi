@@ -34,6 +34,8 @@ function create()
 
     player_1_score_text = game.add.text(16, 0, 'Player 1: 0', { fontSize: '16px', fill: '#FFFFFF' });
     player_2_score_text = game.add.text(700, 0, 'Player 2: 0', { fontSize: '16px', fill: '#FFFFFF' });
+    player_1_n_swaps_text = game.add.text(16, 580, 'P1 swaps: 0', { fontSize: '16px', fill: '#FFFFFF' });
+    player_2_n_swaps_text = game.add.text(700, 580, 'P2 swaps: 0', { fontSize: '16px', fill: '#FFFFFF' });
 
     // Set inputs
     player_1_up = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -48,7 +50,8 @@ function create()
 function update() 
 {
     game.physics.arcade.collide(ball.ball, borders_group);
-    game.physics.arcade.collide(ball.ball, players_group);
+    game.physics.arcade.collide(ball.ball, player_1.paddle, process_ball_hit_player_1);
+    game.physics.arcade.collide(ball.ball, player_2.paddle, process_ball_hit_player_2);
     game.physics.arcade.collide(players_group, borders_group);
 
     player_1.process_input(game, player_1_up, player_1_down, player_1_swap, player_2);
@@ -60,6 +63,8 @@ function update()
 
     player_1_score_text.text = 'Player 1: ' + player_1.score;
     player_2_score_text.text = 'Player 2: ' + player_2.score;
+    player_1_n_swaps_text.text = 'P1 swaps: ' + player_1.n_swaps;
+    player_2_n_swaps_text.text = 'P2 swaps: ' + player_2.n_swaps;
 }
 
 
@@ -101,4 +106,16 @@ function create_players()
     player_2 = new Player(players_group, 770, 50, '#FF0000');   
 
     return players_group;
+}
+
+
+function process_ball_hit_player_1()
+{
+    player_1.decrease_hits_to_get_swap_counter();
+}
+
+
+function process_ball_hit_player_2()
+{
+    player_2.decrease_hits_to_get_swap_counter();
 }
