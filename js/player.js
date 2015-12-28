@@ -5,7 +5,7 @@ function Player(group, x, y, color)
     this.score = 0;
 
     // Swap cooldown and timestamp.
-    this.swapCooldown = 3.0;
+    this.swapCooldown = 0.5;
     this.lastSwapTimestamp = -3.0;
     this.hits_to_get_swap = HITS_TO_GET_SWAP;
     this.n_swaps = 0;
