@@ -11,8 +11,10 @@ var paddle_max_speed = 300;
 
 var player_1_up;
 var player_1_down;
+var player_1_swap;
 var player_2_up;
 var player_2_down;
+var player_2_swap;
 var player_1_score_text;
 var player_2_score_text;
 
@@ -43,8 +45,10 @@ function create()
     // Set inputs
     player_1_up = game.input.keyboard.addKey(Phaser.Keyboard.W);
     player_1_down = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    player_1_swap = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     player_2_up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     player_2_down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    player_2_swap = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0);
 }
 
 
@@ -52,8 +56,8 @@ function update()
 {
     game.physics.arcade.collide(physics_elements, physics_elements);
 
-    player_1.process_input(player_1_up, player_1_down);
-    player_2.process_input(player_2_up, player_2_down);
+    player_1.process_input(game, player_1_up, player_1_down, player_1_swap, player_2);
+    player_2.process_input(game, player_2_up, player_2_down, player_2_swap, player_1);
 
     player_1.update();
     player_2.update();

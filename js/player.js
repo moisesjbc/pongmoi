@@ -4,6 +4,10 @@ function Player(x, y, color)
 {
     this.score = 0;
 
+    // Swap cooldown and timestamp.
+    this.swapCooldown = 3.0;
+    this.lastSwapTimestamp = -3.0;
+
     // Create the bitmap representing the player's paddle.
     var paddle_bitmap = game.add.bitmapData(25, 100);
     paddle_bitmap.ctx.rect(0, 0, 25, 100);
@@ -21,7 +25,7 @@ function Player(x, y, color)
 }
 
 
-Player.prototype.process_input = function(up_button, down_button)
+Player.prototype.process_input = function(game, up_button, down_button, swap_button, other_player)
 {
     if (up_button.isDown){
         this.paddle.body.velocity.y = -paddle_speed;
@@ -30,6 +34,13 @@ Player.prototype.process_input = function(up_button, down_button)
     }else{
         this.paddle.body.velocity.y = 0;
     }
+
+    if(swap_button.isDown && 
+        (game.time.totalElapsedSeconds() - this.lastSwapTimestamp > this.swapCooldown))
+    {
+        this.lastSwapTimestamp = game.time.totalElapsedSeconds();
+        this.swap(other_player);
+    }
 }
 
 
@@ -37,4 +48,14 @@ Player.prototype.update = function()
 {
     // Prevent paddles to be moved in X.
     this.paddle.body.velocity.x = 0;
+}
+
+
+Player.prototype.swap = function(other_player)
+{
+    paddle_pos = this.paddle.position;
+
+    this.paddle.position = other_player.paddle.position;
+
+    other_player.paddle.position = paddle_pos;
 }
