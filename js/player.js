@@ -3,6 +3,7 @@ var HITS_TO_GET_SWAP = 3;
 function Player(group, x, y, color)
 {
     this.score = 0;
+    this.x = x;
 
     // Swap cooldown and timestamp.
     this.swapCooldown = 0.5;
@@ -52,6 +53,7 @@ Player.prototype.update = function()
 {
     // Prevent paddles to be moved in X.
     this.paddle.body.velocity.x = 0;
+    this.paddle.body.position.x = this.x;
 }
 
 
