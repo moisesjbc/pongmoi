@@ -1,7 +1,9 @@
 var HITS_TO_GET_SWAP = 3;
 
-function Player(group, x, y, color)
+function Player(game_state, group, x, y, color)
 {
+    this.game_state = game_state;
+
     this.score = 0;
     this.x = x;
 
@@ -12,7 +14,7 @@ function Player(group, x, y, color)
     this.n_swaps = 0;
 
     // Create the bitmap representing the player's paddle.
-    var paddle_bitmap = game.add.bitmapData(25, 100);
+    var paddle_bitmap = this.game_state.add.bitmapData(25, 100);
     paddle_bitmap.ctx.rect(0, 0, 25, 100);
     paddle_bitmap.ctx.fillStyle = color;
     paddle_bitmap.ctx.fill();
@@ -22,7 +24,7 @@ function Player(group, x, y, color)
     this.paddle = group.create(x, y, paddle_bitmap);
 
     // Enable physics for sprite.
-    game.physics.arcade.enable(this.paddle);
+    this.game_state.physics.arcade.enable(this.paddle);
     this.paddle.body.enable = true;
     this.paddle.body.setSize(25,100);
 }
@@ -40,9 +42,9 @@ Player.prototype.process_input = function(game, up_button, down_button, swap_but
 
     if(swap_button.isDown && 
        this.n_swaps > 0 &&
-        (game.time.totalElapsedSeconds() - this.lastSwapTimestamp > this.swapCooldown))
+        (this.game_state.time.totalElapsedSeconds() - this.lastSwapTimestamp > this.swapCooldown))
     {
-        this.lastSwapTimestamp = game.time.totalElapsedSeconds();
+        this.lastSwapTimestamp = this.game_state.time.totalElapsedSeconds();
         this.n_swaps--;
         this.swap(other_player);
     }

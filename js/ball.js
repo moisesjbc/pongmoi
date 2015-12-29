@@ -1,6 +1,8 @@
 
-function Ball(x, y, velocity_x, velocity_y)
+function Ball(game_state, x, y, velocity_x, velocity_y)
 {
+    this.game_state = game_state;
+
     this.initial_position = {
         x: x,
         y: y
@@ -12,17 +14,17 @@ function Ball(x, y, velocity_x, velocity_y)
     }
 
     // Create a bitmap representing the ball.
-    var ball_bitmap = game.add.bitmapData(25, 25);
+    var ball_bitmap = this.game_state.add.bitmapData(25, 25);
     ball_bitmap.ctx.rect(0, 0, 25, 25);
     ball_bitmap.ctx.fillStyle = '#FFFFFF';
     ball_bitmap.ctx.fill();
 
     // Bitmaps can't have physics on their own, so we create a sprite as a
     // container.
-    this.ball = game.add.sprite(x, y, ball_bitmap);
+    this.ball = this.game_state.add.sprite(x, y, ball_bitmap);
 
     // Enable and configure ball physics.
-    game.physics.arcade.enable(this.ball);
+    this.game_state.physics.arcade.enable(this.ball);
     this.ball.body.enable = true;
     this.ball.body.setSize(25,25);
     this.ball.body.velocity.x = velocity_x;
