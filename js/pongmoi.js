@@ -1,5 +1,3 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '');
-
 var players_group;
 var borders_group;
 var player_1;
@@ -18,8 +16,6 @@ var player_1_score_text;
 var player_2_score_text;
 
 var last_ball_player_collision_timestamp = 0;
-
-Pongmoi = {};
 
 Pongmoi.GameLoop = function(){}; 
 Pongmoi.GameLoop.prototype = 
@@ -137,4 +133,4 @@ Pongmoi.GameLoop.prototype =
 
 
 game.state.add('GameLoop',Pongmoi.GameLoop);
-game.state.start('GameLoop');
+game.state.start('MainMenu');
