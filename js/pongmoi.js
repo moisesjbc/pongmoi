@@ -22,7 +22,6 @@ Pongmoi.GameLoop.prototype =
 {
     create : function()
     {
-        console.log(this);
         // Enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -126,7 +125,6 @@ Pongmoi.GameLoop.prototype =
 
     process_ball_hit_player_2 : function()
     {
-        console.log(this);
         this.process_ball_hit_player(player_2);
     }
 }
