@@ -55,17 +55,20 @@ Player.prototype.update = function()
 {
     // Prevent paddles to be moved in X.
     this.paddle.body.velocity.x = 0;
-    this.paddle.body.position.x = this.x;
+    this.paddle.x = this.x;
 }
 
 
 Player.prototype.swap = function(other_player)
 {
-    paddle_pos = this.paddle.position;
+    var aux_x = this.paddle.x;
+    var aux_y = this.paddle.y;
 
-    this.paddle.position = other_player.paddle.position;
+    this.x = this.paddle.x = other_player.paddle.x;
+    this.paddle.y = other_player.paddle.y;
 
-    other_player.paddle.position = paddle_pos;
+    other_player.x = other_player.paddle.x = aux_x;
+    other_player.paddle.y = aux_y;
 }
 
 
