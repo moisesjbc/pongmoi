@@ -4,8 +4,18 @@ Pongmoi = {};
 Pongmoi.MainMenu = function(){}; 
 Pongmoi.MainMenu.prototype = 
 {
+    preload : function()
+    {
+        game.load.audio('music', 'assets/music/An_8_Bit_Story.ogg');
+    },
+
+
     create : function()
     {
+        // Play music
+        var music = game.add.audio('music');
+        music.play();
+
         this.title_label = button_label = this.add.text(0, 0, 'Pongmoi', { fontSize: '64px', fill: '#FFF' });
         this.title_label.position.x = (game.width - this.title_label.width) / 2.0;
 
