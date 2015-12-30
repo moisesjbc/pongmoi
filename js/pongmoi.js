@@ -14,14 +14,23 @@ var player_2_down;
 var player_2_swap;
 var player_1_score_text;
 var player_2_score_text;
+var ball_hit_sound;
 
 var last_ball_player_collision_timestamp = 0;
 
 Pongmoi.GameLoop = function(){}; 
 Pongmoi.GameLoop.prototype = 
 {
+    preload : function()
+    {
+        game.load.audio('ball_hit', 'assets/sounds/273583__n-audioman__hit3.wav');
+    },
+
+
     create : function()
     {
+        ball_hit_sound = game.add.audio('ball_hit');
+
         // Enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -46,7 +55,7 @@ Pongmoi.GameLoop.prototype =
     
     update : function() 
     {
-        this.physics.arcade.collide(ball.ball, borders_group);
+        this.physics.arcade.collide(ball.ball, borders_group, this.play_ball_hit_sound);
         this.physics.arcade.collide(ball.ball, player_1.paddle, this.process_ball_hit_player_1, null, this);
         this.physics.arcade.collide(ball.ball, player_2.paddle, this.process_ball_hit_player_2, null, this);
         this.physics.arcade.collide(players_group, borders_group);
@@ -111,6 +120,8 @@ Pongmoi.GameLoop.prototype =
         // A ball-player hit may trigger multiple collisions, so we discard those
         // too close in time.
         if( this.time.totalElapsedSeconds() - last_ball_player_collision_timestamp > 0.5 ){
+            this.play_ball_hit_sound();
+
             last_ball_player_collision_timestamp = this.time.totalElapsedSeconds();
             player.decrease_hits_to_get_swap_counter();
         }
@@ -126,6 +137,12 @@ Pongmoi.GameLoop.prototype =
     process_ball_hit_player_2 : function()
     {
         this.process_ball_hit_player(player_2);
+    },
+
+   
+    play_ball_hit_sound : function()
+    {
+        ball_hit_sound.play('', 0, 0.4);
     }
 }
 
