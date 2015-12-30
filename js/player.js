@@ -1,9 +1,10 @@
 var HITS_TO_GET_SWAP = 3;
 
-function Player(game_state, group, x, y, color)
+function Player(game_state, group, x, y, color, swap_sound)
 {
     this.game_state = game_state;
-
+    this.swap_sound = swap_sound;
+   
     this.score = 0;
     this.x = x;
 
@@ -44,6 +45,7 @@ Player.prototype.process_input = function(game, up_button, down_button, swap_but
        this.n_swaps > 0 &&
         (this.game_state.time.totalElapsedSeconds() - this.lastSwapTimestamp > this.swapCooldown))
     {
+        this.swap_sound.play('',0,0.4);
         this.lastSwapTimestamp = this.game_state.time.totalElapsedSeconds();
         this.n_swaps--;
         this.swap(other_player);

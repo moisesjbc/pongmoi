@@ -15,6 +15,7 @@ var player_2_swap;
 var player_1_score_text;
 var player_2_score_text;
 var ball_hit_sound;
+var swap_sound;
 
 var last_ball_player_collision_timestamp = 0;
 
@@ -24,12 +25,14 @@ Pongmoi.GameLoop.prototype =
     preload : function()
     {
         game.load.audio('ball_hit', 'assets/sounds/273583__n-audioman__hit3.wav');
+        game.load.audio('player_swap', 'assets/sounds/273608__n-audioman__teleport.wav');
     },
 
 
     create : function()
     {
         ball_hit_sound = game.add.audio('ball_hit');
+        swap_sound = game.add.audio('player_swap');
 
         // Enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
@@ -108,8 +111,8 @@ Pongmoi.GameLoop.prototype =
         players_group.enableBody = true;
         players_group.physicsBodyType = Phaser.Physics.ARCADE;
 
-        player_1 = new Player(this, players_group, 5, 50, '#0000FF');
-        player_2 = new Player(this, players_group, 770, 50, '#FF0000');   
+        player_1 = new Player(this, players_group, 5, 50, '#0000FF', swap_sound);
+        player_2 = new Player(this, players_group, 770, 50, '#FF0000', swap_sound);   
 
         return players_group;
     },

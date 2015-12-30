@@ -15,3 +15,10 @@
 - Sound uploaded by user "LittleRobotSoundFactory" to <https://freesound.org>
 - License: [Attribution License](http://creativecommons.org/licenses/by/3.0/)
 - Source: <https://freesound.org/people/LittleRobotSoundFactory/sounds/270332/>
+
+
+### Sound "teleport.wav"
+
+- Sound uploaded by user "n_audioman" to <https://freesound.org>
+- License: [Attribution License](http://creativecommons.org/licenses/by/3.0/)
+- Source: <https://freesound.org/people/n_audioman/sounds/273608/>
