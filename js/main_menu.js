@@ -53,6 +53,8 @@ Pongmoi.MainMenu.prototype =
         // Enables all kind of input actions on this sprite (click, etc)
         button.inputEnabled = true;
 
+        button.events.onInputOver.add(function(){button_label.fontSize = '18px';}, this);
+        button.events.onInputOut.add(function(){button_label.fontSize = '16px';}, this);
         button.events.onInputDown.add(callback, this);
 
         return button;
