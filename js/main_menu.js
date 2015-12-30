@@ -14,7 +14,7 @@ Pongmoi.MainMenu.prototype =
     {
         // Play music
         var music = game.add.audio('music');
-        music.play();
+        music.play('', 0, 1, true);
 
         this.title_label = button_label = this.add.text(0, 0, 'Pongmoi', { fontSize: '64px', fill: '#FFF' });
         this.title_label.position.x = (game.width - this.title_label.width) / 2.0;
