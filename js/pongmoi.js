@@ -17,6 +17,10 @@ var player_2_score_text;
 var ball_hit_sound;
 var swap_sound;
 
+var win_score = 5;
+
+var victory_label;
+
 var last_ball_player_collision_timestamp = 0;
 
 Pongmoi.GameLoop = function(){}; 
@@ -74,6 +78,32 @@ Pongmoi.GameLoop.prototype =
         player_2_score_text.text = 'P2 score: ' + player_2.score;
         player_1_n_swaps_text.text = 'P1 swaps: ' + player_1.n_swaps;
         player_2_n_swaps_text.text = 'P2 swaps: ' + player_2.n_swaps;
+
+        if(player_1.score >= win_score || player_2.score >= win_score){
+            game.paused = true;
+            var victory_text = 'Player 1 wins!';
+            var victory_text_color = '#0000FF';
+            if(player_1.score < win_score){
+                victory_text = 'Player 2 wins!';
+                victory_text_color = '#FF0000';
+            }
+            victory_text += '\n\nPress [ENTER] to restart';
+            victory_label = this.add.text(0, 0, victory_text, { fontSize: '40px', fill: victory_text_color, align: 'center' });
+            victory_label.x = (game.width - victory_label.width) / 2.0;
+            victory_label.y = (game.height - victory_label.height) / 2.0 + 125;
+            game.input.keyboard.onDownCallback = this.unpause;
+        }
+    },
+
+
+    unpause : function(event){
+        // Only act if paused
+        if(game.paused && event.keyCode == Phaser.Keyboard.ENTER){
+            victory_label.destroy();
+            game.paused = false;
+            player_1.score = 0;
+            player_2.score = 0;
+        }
     },
 
 
@@ -112,7 +142,7 @@ Pongmoi.GameLoop.prototype =
         players_group.physicsBodyType = Phaser.Physics.ARCADE;
 
         player_1 = new Player(this, players_group, 5, 50, '#0000FF', swap_sound);
-        player_2 = new Player(this, players_group, 770, 50, '#FF0000', swap_sound);   
+        player_2 = new Player(this, players_group, 770, 50, '#FF0000', swap_sound);
 
         return players_group;
     },
