@@ -101,8 +101,9 @@ Pongmoi.GameLoop.prototype =
         if(game.paused && event.keyCode == Phaser.Keyboard.ENTER){
             victory_label.destroy();
             game.paused = false;
-            player_1.score = 0;
-            player_2.score = 0;
+            player_1.restart();
+            player_2.restart();
+            ball.restart();
         }
     },
 

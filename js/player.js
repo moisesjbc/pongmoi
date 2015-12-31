@@ -5,14 +5,7 @@ function Player(game_state, group, x, y, color, swap_sound)
     this.game_state = game_state;
     this.swap_sound = swap_sound;
    
-    this.score = 0;
-    this.x = x;
-
-    // Swap cooldown and timestamp.
-    this.swapCooldown = 0.5;
-    this.lastSwapTimestamp = -3.0;
-    this.hits_to_get_swap = HITS_TO_GET_SWAP;
-    this.n_swaps = 0;
+    this.initial_position = { x: x, y: y };
 
     // Create the bitmap representing the player's paddle.
     var paddle_bitmap = this.game_state.add.bitmapData(25, 100);
@@ -28,6 +21,8 @@ function Player(game_state, group, x, y, color, swap_sound)
     this.game_state.physics.arcade.enable(this.paddle);
     this.paddle.body.enable = true;
     this.paddle.body.setSize(25,100);
+
+    this.restart();
 }
 
 
@@ -81,4 +76,21 @@ Player.prototype.decrease_hits_to_get_swap_counter = function()
         this.hits_to_get_swap = HITS_TO_GET_SWAP;
         this.n_swaps++;
     }
+}
+
+
+Player.prototype.restart = function()
+{
+    this.paddle.x = this.initial_position.x;
+    this.paddle.y = this.initial_position.y;
+
+    this.x = this.initial_position.x;
+
+    this.score = 0;
+
+    // Swap cooldown and timestamp.
+    this.swapCooldown = 0.5;
+    this.lastSwapTimestamp = -3.0;
+    this.hits_to_get_swap = HITS_TO_GET_SWAP;
+    this.n_swaps = 0;
 }

@@ -59,5 +59,9 @@ Ball.prototype.update = function(player_1, player_2)
 
 Ball.prototype.restart = function()
 {
-    
+    this.ball.x = this.initial_position.x;
+    this.ball.y = this.initial_position.y;
+
+    this.ball.body.velocity.x = this.initial_velocity.x;
+    this.ball.body.velocity.y = this.initial_velocity.y;
 }
