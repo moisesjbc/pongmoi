@@ -63,9 +63,11 @@ Pongmoi.MainMenu.prototype =
     create_instructions_labels : function(y)
     {
         var instructions = 
-            "This is like the original Pong but with an extra addon: swapping!              \n" +
-            "    - After hitting the ball 3 times you get a swap.                           \n" +
+            "This is a typical Pong FOR TWO PLAYERS but with an extra addon: swapping!      \n" +
+            "    - After hitting the ball " + HITS_TO_GET_SWAP + " times you get a swap.                           \n" +
             "    - Activate swap and you'll instantly swap your position with your oponent  \n" +
+            "                                                                               \n" +
+            "    - First player to score " + win_score + " points wins!                                     \n" +
             "                                                                               \n" +
             "Controls:                                                                      \n";
 
