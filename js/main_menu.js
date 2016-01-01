@@ -21,6 +21,10 @@ Pongmoi.MainMenu.prototype =
 
         this.title_label = button_label = this.add.text(0, 0, 'Pongmoi', { fontSize: '64px', fill: '#FFF' });
         this.title_label.position.x = (game.width - this.title_label.width) / 2.0;
+        
+        this.version_label = this.add.text(0, 0, 'v1.0.0', { fontSize: '16px', fill: '#FFF' });
+        this.version_label.x = game.width - this.version_label.width - 10;
+        this.version_label.y = game.height - this.version_label.height - 10; 
 
         button_y = this.create_instructions_labels( this.title_label.position.y + this.title_label.height + 10 );
 
