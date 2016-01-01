@@ -1,4 +1,4 @@
-var win_score = 5;
+var WIN_SCORE = 5;
 
 Pongmoi.GameLoop = function(){}; 
 Pongmoi.GameLoop.prototype = 
@@ -91,11 +91,11 @@ Pongmoi.GameLoop.prototype =
         this.gui.player_1_n_swaps_text.text = 'P1 swaps: ' + this.player_1.n_swaps;
         this.gui.player_2_n_swaps_text.text = 'P2 swaps: ' + this.player_2.n_swaps;
 
-        if(this.player_1.score >= win_score || this.player_2.score >= win_score){
+        if(this.player_1.score >= WIN_SCORE || this.player_2.score >= WIN_SCORE){
             game.paused = true;
             var victory_text = 'Player 1 wins!';
             var victory_text_color = '#0000FF';
-            if(this.player_1.score < win_score){
+            if(this.player_1.score < WIN_SCORE){
                 victory_text = 'Player 2 wins!';
                 victory_text_color = '#FF0000';
             }
