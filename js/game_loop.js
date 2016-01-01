@@ -1,5 +1,3 @@
-var players_group;
-var borders_group;
 var player_1;
 var player_2;
 var ball;
@@ -38,8 +36,11 @@ Pongmoi.GameLoop.prototype =
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         ball = new Ball(this, 400, 300, 150, 150);
-        players_group = this.create_players();
-        borders_group = this.create_horizontal_borders();
+        this.groups =
+        {
+            players : this.create_players(),
+            borders : this.create_horizontal_borders()
+        };
 
         player_1_score_text = this.add.text(16, 0, 'Player 1: 0', { fontSize: '16px', fill: '#FFFFFF' });
         player_2_score_text = this.add.text(700, 0, 'Player 2: 0', { fontSize: '16px', fill: '#FFFFFF' });
@@ -65,10 +66,10 @@ Pongmoi.GameLoop.prototype =
     
     update : function() 
     {
-        this.physics.arcade.collide(ball.ball, borders_group, this.play_ball_hit_sound, null, this);
+        this.physics.arcade.collide(ball.ball, this.groups.borders, this.play_ball_hit_sound, null, this);
         this.physics.arcade.collide(ball.ball, player_1.paddle, this.process_ball_hit_player_1, null, this);
         this.physics.arcade.collide(ball.ball, player_2.paddle, this.process_ball_hit_player_2, null, this);
-        this.physics.arcade.collide(players_group, borders_group);
+        this.physics.arcade.collide(this.groups.players, this.groups.borders);
 
         player_1.process_input(game, this.player_1_controls, player_2);
         player_2.process_input(game, this.player_2_controls, player_1);
