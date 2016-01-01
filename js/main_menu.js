@@ -11,16 +11,21 @@ Pongmoi.MainMenu.prototype =
 
     create : function()
     {
-        // Play music
-        var music = game.add.audio('music');
-        music.play('', 0, 1, true);
+        // Play music   
+        if(typeof this.music == 'undefined'){
+            this.music = game.add.audio('music');
+        }
+        if(!this.music.isPlaying){
+            this.music.play('', 0, 1, true);
+        }
 
         this.title_label = button_label = this.add.text(0, 0, 'Pongmoi', { fontSize: '64px', fill: '#FFF' });
         this.title_label.position.x = (game.width - this.title_label.width) / 2.0;
 
         button_y = this.create_instructions_labels( this.title_label.position.y + this.title_label.height + 10 );
 
-        this.play_button = this.create_button('Play', button_y, this.on_play_button_click);
+        this.play_button = create_button(this, 'Play', button_y, this.on_play_button_click);
+        this.credits_button = create_button(this, 'Credits', button_y + this.play_button.height + 10, this.on_credits_button_click); 
     },
 
 
@@ -30,33 +35,9 @@ Pongmoi.MainMenu.prototype =
     },
 
 
-    create_button : function(button_text, y, callback)
+    on_credits_button_click : function()
     {
-        // Create a bitmap representing the button.
-        var button_bitmap = this.add.bitmapData(300, 25);
-        button_bitmap.ctx.rect(0, 0, 300, 25);
-        button_bitmap.ctx.fillStyle = '#FFFFFF';
-        button_bitmap.ctx.fill();
-
-        // Create the button sprite.
-        button = this.add.sprite((game.width - 300) / 2.0, y, button_bitmap);
-
-        // Create the button label.
-        button_label = this.add.text( 0, 0, button_text, { fontSize: '16px', fill: '#0' });
-        button.addChild(button_label);
-
-        // Center label inside the button
-        button_label.position.x = (button.width - button_label.width) / 2.0;
-        button_label.position.y = (button.height - button_label.height) / 2.0;
-
-        // Enables all kind of input actions on this sprite (click, etc)
-        button.inputEnabled = true;
-
-        button.events.onInputOver.add(function(){button_label.fontSize = '18px';}, this);
-        button.events.onInputOut.add(function(){button_label.fontSize = '16px';}, this);
-        button.events.onInputDown.add(callback, this);
-
-        return button;
+        game.state.start('CreditsScreen');
     },
 
 
