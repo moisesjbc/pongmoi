@@ -99,5 +99,11 @@ Pongmoi.MainMenu.prototype =
         this.player_2_controls.position.y = controls_str_y;
 
         return this.player_1_controls.position.y + this.player_1_controls.height + 10;
+    },
+
+
+    shutdown : function()
+    {
+        this.input.keyboard.onDownCallback = undefined;
     }
 }

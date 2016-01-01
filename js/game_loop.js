@@ -209,5 +209,11 @@ Pongmoi.GameLoop.prototype =
     play_ball_hit_sound : function()
     {
         this.sounds.ball_hit.play('', 0, 0.4);
+    },
+
+
+    shutdown : function()
+    {
+        this.input.keyboard.onDownCallback = undefined;
     }
 }
