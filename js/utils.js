@@ -7,10 +7,10 @@ function create_button(game_state, button_text, y, callback)
     button_bitmap.ctx.fill();
 
     // Create the button sprite.
-    button = game_state.add.sprite((game.width - 300) / 2.0, y, button_bitmap);
+    var button = game_state.add.sprite((game.width - 300) / 2.0, y, button_bitmap);
 
     // Create the button label.
-    button_label = game_state.add.text( 0, 0, button_text, { fontSize: '16px', fill: '#0' });
+    var button_label = game_state.add.text( 0, 0, button_text, { fontSize: '16px', fill: '#0' });
     button.addChild(button_label);
 
     // Center label inside the button
