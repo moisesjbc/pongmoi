@@ -24,7 +24,18 @@ Pongmoi.CreditsScreen.prototype =
         this.credits_label = this.add.text(0, 0, credits_text, { fontSize: '20px', fill: '#FFFFFF', align: 'center' } );
         this.credits_label.x = (game.width - this.credits_label.width) / 2.0;
 
-        this.return_button = create_button(this, 'Return to main menu', this.credits_label.bottom + 10, this.return_to_main_menu);
+        this.return_button = create_button(this, '[ENTER] - Return to main menu', this.credits_label.bottom + 10, this.return_to_main_menu);
+
+        this.input.keyboard.onDownCallback = this.on_keydown_callback;
+        this.input.keyboard.callbackContext = this;
+    },
+
+
+    on_keydown_callback : function(event)
+    {
+        if(event.keyCode == Phaser.Keyboard.ENTER){
+            this.return_to_main_menu();
+        }
     },
 
 
