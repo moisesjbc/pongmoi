@@ -1,12 +1,8 @@
 var ball;
 
 var pause_button;
-var player_1_score_text;
-var player_2_score_text;
 
 var win_score = 5;
-
-var victory_label;
 
 var last_ball_player_collision_timestamp = 0;
 
@@ -38,10 +34,13 @@ Pongmoi.GameLoop.prototype =
             borders : this.create_horizontal_borders()
         };
 
-        player_1_score_text = this.add.text(16, 0, 'Player 1: 0', { fontSize: '16px', fill: '#FFFFFF' });
-        player_2_score_text = this.add.text(700, 0, 'Player 2: 0', { fontSize: '16px', fill: '#FFFFFF' });
-        player_1_n_swaps_text = this.add.text(16, 580, 'P1 swaps: 0', { fontSize: '16px', fill: '#FFFFFF' });
-        player_2_n_swaps_text = this.add.text(700, 580, 'P2 swaps: 0', { fontSize: '16px', fill: '#FFFFFF' });
+        this.gui =
+        {
+            player_1_score_text     : this.add.text(16, 0, 'Player 1: 0', { fontSize: '16px', fill: '#FFFFFF' }),
+            player_2_score_text     : this.add.text(700, 0, 'Player 2: 0', { fontSize: '16px', fill: '#FFFFFF' }),
+            player_1_n_swaps_text   : this.add.text(16, 580, 'P1 swaps: 0', { fontSize: '16px', fill: '#FFFFFF' }),
+            player_2_n_swaps_text   : this.add.text(700, 580, 'P2 swaps: 0', { fontSize: '16px', fill: '#FFFFFF' })
+        };
 
         // Set inputs
         this.player_1_controls =
@@ -90,10 +89,10 @@ Pongmoi.GameLoop.prototype =
         this.player_2.update();
         ball.update(this.player_1, this.player_2);
 
-        player_1_score_text.text = 'P1 score: ' + this.player_1.score;
-        player_2_score_text.text = 'P2 score: ' + this.player_2.score;
-        player_1_n_swaps_text.text = 'P1 swaps: ' + this.player_1.n_swaps;
-        player_2_n_swaps_text.text = 'P2 swaps: ' + this.player_2.n_swaps;
+        this.gui.player_1_score_text.text = 'P1 score: ' + this.player_1.score;
+        this.gui.player_2_score_text.text = 'P2 score: ' + this.player_2.score;
+        this.gui.player_1_n_swaps_text.text = 'P1 swaps: ' + this.player_1.n_swaps;
+        this.gui.player_2_n_swaps_text.text = 'P2 swaps: ' + this.player_2.n_swaps;
 
         if(this.player_1.score >= win_score || this.player_2.score >= win_score){
             game.paused = true;
@@ -104,9 +103,9 @@ Pongmoi.GameLoop.prototype =
                 victory_text_color = '#FF0000';
             }
             victory_text += '\n\nPress [ENTER] to restart';
-            victory_label = this.add.text(0, 0, victory_text, { fontSize: '40px', fill: victory_text_color, align: 'center' });
-            victory_label.x = (game.width - victory_label.width) / 2.0;
-            victory_label.y = (game.height - victory_label.height) / 2.0 + 125;
+            this.gui.victory_label = this.add.text(0, 0, victory_text, { fontSize: '40px', fill: victory_text_color, align: 'center' });
+            this.gui.victory_label.x = (game.width - this.gui.victory_label.width) / 2.0;
+            this.gui.victory_label.y = (game.height - this.gui.victory_label.height) / 2.0 + 125;
             game.input.keyboard.onDownCallback = this.unpause_victory;
         }
     },
@@ -117,7 +116,7 @@ Pongmoi.GameLoop.prototype =
         if(game.paused && event.keyCode == Phaser.Keyboard.ENTER){
             game.paused = false;
 
-            victory_label.destroy();
+            this.gui.victory_label.destroy();
 
             this.player_1.restart();
             this.player_2.restart();
