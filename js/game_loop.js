@@ -6,14 +6,7 @@ var ball;
 var paddle_speed = 500;
 var paddle_max_speed = 300;
 
-var player_1_up;
-var player_1_down;
-var player_1_swap;
-var player_2_up;
-var player_2_down;
-var player_2_swap;
 var pause_button;
-
 var player_1_score_text;
 var player_2_score_text;
 var ball_hit_sound;
@@ -53,12 +46,18 @@ Pongmoi.GameLoop.prototype =
         player_2_n_swaps_text = this.add.text(700, 580, 'P2 swaps: 0', { fontSize: '16px', fill: '#FFFFFF' });
 
         // Set inputs
-        player_1_up = this.input.keyboard.addKey(Phaser.Keyboard.W);
-        player_1_down = this.input.keyboard.addKey(Phaser.Keyboard.S);
-        player_1_swap = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        player_2_up = this.input.keyboard.addKey(Phaser.Keyboard.UP);
-        player_2_down = this.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        player_2_swap = this.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0);
+        this.player_1_controls =
+        {
+            up      : this.input.keyboard.addKey(Phaser.Keyboard.W),
+            down    : this.input.keyboard.addKey(Phaser.Keyboard.S),
+            swap    : this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+        };
+        this.player_2_controls =
+        {
+            up      : this.input.keyboard.addKey(Phaser.Keyboard.UP),
+            down    : this.input.keyboard.addKey(Phaser.Keyboard.DOWN),
+            swap    : this.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0)
+        };
         pause_button = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
     },
 
@@ -70,8 +69,8 @@ Pongmoi.GameLoop.prototype =
         this.physics.arcade.collide(ball.ball, player_2.paddle, this.process_ball_hit_player_2, null, this);
         this.physics.arcade.collide(players_group, borders_group);
 
-        player_1.process_input(game, player_1_up, player_1_down, player_1_swap, player_2);
-        player_2.process_input(game, player_2_up, player_2_down, player_2_swap, player_1);
+        player_1.process_input(game, this.player_1_controls, player_2);
+        player_2.process_input(game, this.player_2_controls, player_1);
 
         if(pause_button.isDown){
             game.paused = true;

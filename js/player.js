@@ -26,17 +26,17 @@ function Player(game_state, group, x, y, color, swap_sound)
 }
 
 
-Player.prototype.process_input = function(game, up_button, down_button, swap_button, other_player)
+Player.prototype.process_input = function(game, controls, other_player)
 {
-    if (up_button.isDown){
+    if (controls.up.isDown){
         this.paddle.body.velocity.y = -paddle_speed;
-    }else if (down_button.isDown){
+    }else if (controls.down.isDown){
         this.paddle.body.velocity.y = paddle_speed;
     }else{
         this.paddle.body.velocity.y = 0;
     }
 
-    if(swap_button.isDown && 
+    if(controls.swap.isDown && 
        this.n_swaps > 0 &&
         (this.game_state.time.totalElapsedSeconds() - this.lastSwapTimestamp > this.swapCooldown))
     {
