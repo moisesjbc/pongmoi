@@ -9,8 +9,6 @@ var paddle_max_speed = 300;
 var pause_button;
 var player_1_score_text;
 var player_2_score_text;
-var ball_hit_sound;
-var swap_sound;
 
 var win_score = 5;
 
@@ -30,9 +28,12 @@ Pongmoi.GameLoop.prototype =
 
     create : function()
     {
-        ball_hit_sound = game.add.audio('ball_hit');
-        swap_sound = game.add.audio('player_swap');
-
+        this.sounds =
+        {
+            ball_hit    : game.add.audio('ball_hit'),
+            swap        : game.add.audio('player_swap')
+        };
+        
         // Enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -64,7 +65,7 @@ Pongmoi.GameLoop.prototype =
     
     update : function() 
     {
-        this.physics.arcade.collide(ball.ball, borders_group, this.play_ball_hit_sound);
+        this.physics.arcade.collide(ball.ball, borders_group, this.play_ball_hit_sound, null, this);
         this.physics.arcade.collide(ball.ball, player_1.paddle, this.process_ball_hit_player_1, null, this);
         this.physics.arcade.collide(ball.ball, player_2.paddle, this.process_ball_hit_player_2, null, this);
         this.physics.arcade.collide(players_group, borders_group);
@@ -176,8 +177,8 @@ Pongmoi.GameLoop.prototype =
         players_group.enableBody = true;
         players_group.physicsBodyType = Phaser.Physics.ARCADE;
 
-        player_1 = new Player(this, players_group, 5, 50, '#0000FF', swap_sound);
-        player_2 = new Player(this, players_group, 770, 50, '#FF0000', swap_sound);
+        player_1 = new Player(this, players_group, 5, 50, '#0000FF', this.sounds.swap);
+        player_2 = new Player(this, players_group, 770, 50, '#FF0000', this.sounds.swap);
 
         return players_group;
     },
@@ -210,6 +211,6 @@ Pongmoi.GameLoop.prototype =
    
     play_ball_hit_sound : function()
     {
-        ball_hit_sound.play('', 0, 0.4);
+        this.sounds.ball_hit.play('', 0, 0.4);
     }
 }
