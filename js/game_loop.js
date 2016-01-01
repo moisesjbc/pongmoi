@@ -1,5 +1,3 @@
-var player_1;
-var player_2;
 var ball;
 var paddle_speed = 500;
 var paddle_max_speed = 300;
@@ -67,12 +65,12 @@ Pongmoi.GameLoop.prototype =
     update : function() 
     {
         this.physics.arcade.collide(ball.ball, this.groups.borders, this.play_ball_hit_sound, null, this);
-        this.physics.arcade.collide(ball.ball, player_1.paddle, this.process_ball_hit_player_1, null, this);
-        this.physics.arcade.collide(ball.ball, player_2.paddle, this.process_ball_hit_player_2, null, this);
+        this.physics.arcade.collide(ball.ball, this.player_1.paddle, this.process_ball_hit_player_1, null, this);
+        this.physics.arcade.collide(ball.ball, this.player_2.paddle, this.process_ball_hit_player_2, null, this);
         this.physics.arcade.collide(this.groups.players, this.groups.borders);
 
-        player_1.process_input(game, this.player_1_controls, player_2);
-        player_2.process_input(game, this.player_2_controls, player_1);
+        this.player_1.process_input(game, this.player_1_controls, this.player_2);
+        this.player_2.process_input(game, this.player_2_controls, this.player_1);
 
         if(pause_button.isDown){
             game.paused = true;
@@ -90,20 +88,20 @@ Pongmoi.GameLoop.prototype =
             game.input.keyboard.onDownCallback = this.unpause;
         }
 
-        player_1.update();
-        player_2.update();
-        ball.update(player_1, player_2);
+        this.player_1.update();
+        this.player_2.update();
+        ball.update(this.player_1, this.player_2);
 
-        player_1_score_text.text = 'P1 score: ' + player_1.score;
-        player_2_score_text.text = 'P2 score: ' + player_2.score;
-        player_1_n_swaps_text.text = 'P1 swaps: ' + player_1.n_swaps;
-        player_2_n_swaps_text.text = 'P2 swaps: ' + player_2.n_swaps;
+        player_1_score_text.text = 'P1 score: ' + this.player_1.score;
+        player_2_score_text.text = 'P2 score: ' + this.player_2.score;
+        player_1_n_swaps_text.text = 'P1 swaps: ' + this.player_1.n_swaps;
+        player_2_n_swaps_text.text = 'P2 swaps: ' + this.player_2.n_swaps;
 
-        if(player_1.score >= win_score || player_2.score >= win_score){
+        if(this.player_1.score >= win_score || this.player_2.score >= win_score){
             game.paused = true;
             var victory_text = 'Player 1 wins!';
             var victory_text_color = '#0000FF';
-            if(player_1.score < win_score){
+            if(this.player_1.score < win_score){
                 victory_text = 'Player 2 wins!';
                 victory_text_color = '#FF0000';
             }
@@ -123,8 +121,8 @@ Pongmoi.GameLoop.prototype =
 
             victory_label.destroy();
 
-            player_1.restart();
-            player_2.restart();
+            this.player_1.restart();
+            this.player_2.restart();
             ball.restart();
         }
     },
@@ -178,8 +176,8 @@ Pongmoi.GameLoop.prototype =
         players_group.enableBody = true;
         players_group.physicsBodyType = Phaser.Physics.ARCADE;
 
-        player_1 = new Player(this, players_group, 5, 50, '#0000FF', this.sounds.swap);
-        player_2 = new Player(this, players_group, 770, 50, '#FF0000', this.sounds.swap);
+        this.player_1 = new Player(this, players_group, 5, 50, '#0000FF', this.sounds.swap);
+        this.player_2 = new Player(this, players_group, 770, 50, '#FF0000', this.sounds.swap);
 
         return players_group;
     },
@@ -200,13 +198,13 @@ Pongmoi.GameLoop.prototype =
 
     process_ball_hit_player_1 : function()
     {
-        this.process_ball_hit_player(player_1);
+        this.process_ball_hit_player(this.player_1);
     },
 
 
     process_ball_hit_player_2 : function()
     {
-        this.process_ball_hit_player(player_2);
+        this.process_ball_hit_player(this.player_2);
     },
 
    
