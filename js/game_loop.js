@@ -72,6 +72,7 @@ Pongmoi.GameLoop.prototype =
                 'Game paused\n' +
                 '\n' +
                 '[ESC] - Resume game\n' +
+                '[M] - Toggle sound ON/OFF\n' +
                 '[ENTER] - Return to main menu\n';
 
             pause_label = this.add.text(0,0, pause_text, { fontSize: '20px', fill: '#DDDDDD' });
@@ -132,6 +133,8 @@ Pongmoi.GameLoop.prototype =
                 if(event.keyCode == Phaser.Keyboard.ENTER){
                     game.state.start('MainMenu');
                 }
+            }else if(event.keyCode == Phaser.Keyboard.M){
+                toggle_sound();
             }
         }
     },

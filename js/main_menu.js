@@ -29,8 +29,9 @@ Pongmoi.MainMenu.prototype =
         button_y = this.create_instructions_labels( this.title_label.position.y + this.title_label.height + 10 );
 
         this.play_button = create_button(this, '[ENTER] - Play', button_y, this.on_play_button_click);
-        this.credits_button = create_button(this, '[C] - Credits', button_y + this.play_button.height + 10, this.on_credits_button_click);
-
+        this.toggle_sound_button = create_button(this, '[M] - Toggle sound ON/OFF', this.play_button.bottom + 10, toggle_sound);
+        this.credits_button = create_button(this, '[C] - Credits', this.toggle_sound_button.bottom + 10, this.on_credits_button_click);
+        
         this.input.keyboard.onDownCallback = this.on_keydown_callback;
         this.input.keyboard.callbackContext = this;
     },
@@ -40,6 +41,8 @@ Pongmoi.MainMenu.prototype =
     {
         if(event.keyCode == Phaser.Keyboard.ENTER){
             this.on_play_button_click();
+        }else if(event.keyCode == Phaser.Keyboard.M){
+            toggle_sound();
         }else if(event.keyCode == Phaser.Keyboard.C){
             this.on_credits_button_click();
         }

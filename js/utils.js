@@ -30,3 +30,9 @@ function create_button(game_state, button_text, y, callback)
 
     return button;
 }
+
+
+function toggle_sound()
+{
+    game.sound.mute = !game.sound.mute;
+}
