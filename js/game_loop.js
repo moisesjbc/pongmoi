@@ -1,10 +1,4 @@
-var ball;
-
-var pause_button;
-
 var win_score = 5;
-
-var last_ball_player_collision_timestamp = 0;
 
 Pongmoi.GameLoop = function(){}; 
 Pongmoi.GameLoop.prototype = 
@@ -18,6 +12,8 @@ Pongmoi.GameLoop.prototype =
 
     create : function()
     {
+        this.last_ball_player_collision_timestamp = 0;
+
         this.sounds =
         {
             ball_hit    : game.add.audio('ball_hit'),
@@ -27,7 +23,7 @@ Pongmoi.GameLoop.prototype =
         // Enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
-        ball = new Ball(this, 400, 300, 150, 150);
+        this.ball = new Ball(this, 400, 300, 150, 150);
         this.groups =
         {
             players : this.create_players(),
@@ -55,21 +51,21 @@ Pongmoi.GameLoop.prototype =
             down    : this.input.keyboard.addKey(Phaser.Keyboard.DOWN),
             swap    : this.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0)
         };
-        pause_button = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        this.pause_key = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
     },
 
     
     update : function() 
     {
-        this.physics.arcade.collide(ball.ball, this.groups.borders, this.play_ball_hit_sound, null, this);
-        this.physics.arcade.collide(ball.ball, this.player_1.paddle, this.process_ball_hit_player_1, null, this);
-        this.physics.arcade.collide(ball.ball, this.player_2.paddle, this.process_ball_hit_player_2, null, this);
+        this.physics.arcade.collide(this.ball.ball, this.groups.borders, this.play_ball_hit_sound, null, this);
+        this.physics.arcade.collide(this.ball.ball, this.player_1.paddle, this.process_ball_hit_player_1, null, this);
+        this.physics.arcade.collide(this.ball.ball, this.player_2.paddle, this.process_ball_hit_player_2, null, this);
         this.physics.arcade.collide(this.groups.players, this.groups.borders);
 
         this.player_1.process_input(game, this.player_1_controls, this.player_2);
         this.player_2.process_input(game, this.player_2_controls, this.player_1);
 
-        if(pause_button.isDown){
+        if(this.pause_key.isDown){
             game.paused = true;
 
             var pause_text = 
@@ -83,11 +79,12 @@ Pongmoi.GameLoop.prototype =
             pause_label.y = (game.height - pause_label.height) / 2.0;
 
             game.input.keyboard.onDownCallback = this.unpause;
+            game.input.keyboard.callbackContext = this;
         }
 
         this.player_1.update();
         this.player_2.update();
-        ball.update(this.player_1, this.player_2);
+        this.ball.update(this.player_1, this.player_2);
 
         this.gui.player_1_score_text.text = 'P1 score: ' + this.player_1.score;
         this.gui.player_2_score_text.text = 'P2 score: ' + this.player_2.score;
@@ -107,6 +104,7 @@ Pongmoi.GameLoop.prototype =
             this.gui.victory_label.x = (game.width - this.gui.victory_label.width) / 2.0;
             this.gui.victory_label.y = (game.height - this.gui.victory_label.height) / 2.0 + 125;
             game.input.keyboard.onDownCallback = this.unpause_victory;
+            game.input.keyboard.callbackContext = this;
         }
     },
 
@@ -120,7 +118,7 @@ Pongmoi.GameLoop.prototype =
 
             this.player_1.restart();
             this.player_2.restart();
-            ball.restart();
+            this.ball.restart();
         }
     },
 
@@ -184,10 +182,10 @@ Pongmoi.GameLoop.prototype =
     {
         // A ball-player hit may trigger multiple collisions, so we discard those
         // too close in time.
-        if( this.time.totalElapsedSeconds() - last_ball_player_collision_timestamp > 0.5 ){
+        if( this.time.totalElapsedSeconds() - this.last_ball_player_collision_timestamp > 0.5 ){
             this.play_ball_hit_sound();
 
-            last_ball_player_collision_timestamp = this.time.totalElapsedSeconds();
+            this.last_ball_player_collision_timestamp = this.time.totalElapsedSeconds();
             player.decrease_hits_to_get_swap_counter();
         }
     },
