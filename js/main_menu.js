@@ -1,4 +1,3 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '');
 Pongmoi = {};
 
 Pongmoi.MainMenu = function(){}; 
@@ -99,5 +98,3 @@ Pongmoi.MainMenu.prototype =
         return this.player_1_controls.position.y + this.player_1_controls.height + 10;
     }
 }
-
-game.state.add('MainMenu',Pongmoi.MainMenu);
