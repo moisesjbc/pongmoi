@@ -12,6 +12,8 @@ var player_1_swap;
 var player_2_up;
 var player_2_down;
 var player_2_swap;
+var pause_button;
+
 var player_1_score_text;
 var player_2_score_text;
 var ball_hit_sound;
@@ -57,6 +59,7 @@ Pongmoi.GameLoop.prototype =
         player_2_up = this.input.keyboard.addKey(Phaser.Keyboard.UP);
         player_2_down = this.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         player_2_swap = this.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0);
+        pause_button = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
     },
 
     
@@ -69,6 +72,22 @@ Pongmoi.GameLoop.prototype =
 
         player_1.process_input(game, player_1_up, player_1_down, player_1_swap, player_2);
         player_2.process_input(game, player_2_up, player_2_down, player_2_swap, player_1);
+
+        if(pause_button.isDown){
+            game.paused = true;
+
+            var pause_text = 
+                'Game paused\n' +
+                '\n' +
+                '[ESC] - Resume game\n' +
+                '[ENTER] - Return to main menu\n';
+
+            pause_label = this.add.text(0,0, pause_text, { fontSize: '20px', fill: '#DDDDDD' });
+            pause_label.x = (game.width - pause_label.width) / 2.0;
+            pause_label.y = (game.height - pause_label.height) / 2.0;
+
+            game.input.keyboard.onDownCallback = this.unpause;
+        }
 
         player_1.update();
         player_2.update();
@@ -91,19 +110,35 @@ Pongmoi.GameLoop.prototype =
             victory_label = this.add.text(0, 0, victory_text, { fontSize: '40px', fill: victory_text_color, align: 'center' });
             victory_label.x = (game.width - victory_label.width) / 2.0;
             victory_label.y = (game.height - victory_label.height) / 2.0 + 125;
-            game.input.keyboard.onDownCallback = this.unpause;
+            game.input.keyboard.onDownCallback = this.unpause_victory;
         }
     },
 
 
-    unpause : function(event){
+    unpause_victory : function(event){
         // Only act if paused
         if(game.paused && event.keyCode == Phaser.Keyboard.ENTER){
-            victory_label.destroy();
             game.paused = false;
+
+            victory_label.destroy();
+
             player_1.restart();
             player_2.restart();
             ball.restart();
+        }
+    },
+
+    
+    unpause : function(event){
+        // Only act if paused
+        if(game.paused){
+            if(event.keyCode == Phaser.Keyboard.ESC || event.keyCode == Phaser.Keyboard.ENTER){
+                game.paused = false;
+                pause_label.destroy();
+                if(event.keyCode == Phaser.Keyboard.ENTER){
+                    game.state.start('MainMenu');
+                }
+            }
         }
     },
 
