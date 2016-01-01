@@ -10,7 +10,7 @@ A simple pong clone **for two players on the same keyboard** with an extra addon
 
 ## Play online!
 
-[Play Pongmoi online](https://rawgit.com/moisesjbc/pongmoi/master/pongmoi.html>)
+[Play Pongmoi online](https://rawgit.com/moisesjbc/pongmoi/master/pongmoi.html)
 
 # Credits
 
