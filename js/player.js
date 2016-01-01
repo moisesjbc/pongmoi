@@ -1,4 +1,5 @@
 var HITS_TO_GET_SWAP = 3;
+var PADDLE_SPEED = 500;
 
 function Player(game_state, group, x, y, color, swap_sound)
 {
@@ -29,9 +30,9 @@ function Player(game_state, group, x, y, color, swap_sound)
 Player.prototype.process_input = function(game, controls, other_player)
 {
     if (controls.up.isDown){
-        this.paddle.body.velocity.y = -paddle_speed;
+        this.paddle.body.velocity.y = -PADDLE_SPEED;
     }else if (controls.down.isDown){
-        this.paddle.body.velocity.y = paddle_speed;
+        this.paddle.body.velocity.y = PADDLE_SPEED;
     }else{
         this.paddle.body.velocity.y = 0;
     }

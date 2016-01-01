@@ -1,3 +1,4 @@
+var BALL_MAX_SPEED = 300;
 
 function Ball(game_state, x, y, velocity_x, velocity_y)
 {
@@ -29,7 +30,7 @@ function Ball(game_state, x, y, velocity_x, velocity_y)
     this.ball.body.setSize(25,25);
     this.ball.body.velocity.x = velocity_x;
     this.ball.body.velocity.y = velocity_y;
-    this.ball.body.maxVelocity.set(paddle_max_speed);
+    this.ball.body.maxVelocity.set(BALL_MAX_SPEED);
     this.ball.body.bounce.set(100);
 }
 

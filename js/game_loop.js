@@ -1,6 +1,4 @@
 var ball;
-var paddle_speed = 500;
-var paddle_max_speed = 300;
 
 var pause_button;
 var player_1_score_text;
